@@ -8,7 +8,7 @@ function binarySearch (arr, target) {
     
 
     while (l <= r) {
-        mid = Math.floor((l + r) / 2);
+        mid = Math.floor(l + (r - l) / 2);
 
         if (arr[mid] === target) {
             return mid;
