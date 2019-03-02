@@ -1,39 +1,47 @@
 /**
  * @param {string} s
- * @param {string} p
- * @return {number[]}
+ * @param {string} t
+ * @return {string}
  */
-var findAnagrams = function (s, p) {
+var minWindow = function(s, t) {
+    if (s.length === 0 || t.length === 0) {
+        return "";
+    }
+
     let l = 0;
     let r = -1; // [l..r] 为滑动窗口
     let ret = [];
+    let retLen = s.length + 1;
     let map = {};
 
-    for (let i = 0; i < p.length; i++) {
-        map[p[i]] = 0;
+    for (let i = 0; i < t.length; i++) {
+        map[t[i]] = 0;
     }
 
-    let isInclude = createIsIncludeFunc(p)
+    let isInclude = createIsIncludeFunc(t);
 
     while (l < s.length && r < s.length) {
         if (isInclude(map)) {
-            if (p.length === r - l + 1) {
-                ret.push(l);
+            if (r - l + 1 < retLen) {
+                // ret = s.slice(l, r + 1);
+                ret = [l, r];
+                retLen = r - l + 1;
             }
             if (map[s[l]] > 0) {
                 map[s[l]]--;
             }
-
-            l++;
+            l++
         } else {
             r++;
             if (typeof map[s[r]] === 'number') {
                 map[s[r]]++;
-            }
+            }            
         }
     }
-
-    return ret;
+    if (!ret.length) {
+        return '';
+    }
+    return s.slice(ret[0], ret[1] + 1);
 };
 
 
@@ -62,5 +70,4 @@ function createIsIncludeFunc (p) {
     }
 }
 
-console.log(findAnagrams("cbaebabacd", "abc"));
-
+console.log(minWindow("ADOBECODEBANC", "ABC"));
