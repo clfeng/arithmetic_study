@@ -1,1 +1,1 @@
-require('./wordBreak.js');
+require('./wiggleMaxLength.js');
