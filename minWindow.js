@@ -11,7 +11,7 @@ var minWindow = function(s, t) {
     let l = 0;
     let r = -1; // [l..r] 为滑动窗口
     let ret = [];
-    let retLen = s.length + 1;
+    let retLen = s.length + 1; // 设置一个最大值，方便对比
     let map = {};
 
     for (let i = 0; i < t.length; i++) {
@@ -22,11 +22,12 @@ var minWindow = function(s, t) {
 
     while (l < s.length && r < s.length) {
         if (isInclude(map)) {
-            if (r - l + 1 < retLen) {
-                // ret = s.slice(l, r + 1);
+            if (r - l + 1 < retLen) { // 如果新的窗口的大小比之前记录到的窗口大小还要小的话，更新一下 
                 ret = [l, r];
                 retLen = r - l + 1;
             }
+
+            // 窗口指针往右移动
             if (map[s[l]] > 0) {
                 map[s[l]]--;
             }
